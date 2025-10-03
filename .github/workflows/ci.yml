@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      run: docker build -t geocode-api:latest .
+
+    - name: Run integration tests in Docker
+      run: |
+        docker run --rm \
+          -v $(pwd)/example-data:/app/data:ro \
+          -e PARQUET_PATH=/app/data/whosonfirst-data-admin-andorra-integration-test.parquet \
+          geocode-api:latest \
+          npm run integration-test
