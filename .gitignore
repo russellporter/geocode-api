@@ -1,3 +1,9 @@
+# macOS
+.DS_Store
+
+# Data files
+data/
+
 # Logs
 logs
 *.log
