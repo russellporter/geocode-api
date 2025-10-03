@@ -15,7 +15,7 @@ function log(message) {
 function startServer() {
   return new Promise((resolve, reject) => {
     log('Starting server...');
-    const exampleDataPath = 'example-data/whosonfirst-data-admin-andorra-integration-test.parquet';
+    const exampleDataPath = process.env.PARQUET_PATH || 'example-data/whosonfirst-data-admin-andorra-integration-test.parquet';
     serverProcess = spawn('node', ['dist/index.js'], {
       env: {
         ...process.env,
