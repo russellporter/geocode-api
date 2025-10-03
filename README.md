@@ -52,6 +52,16 @@ npm run build
 npm start
 ```
 
+### Testing
+
+Run integration tests against production data:
+
+```bash
+npm run integration-test
+```
+
+This will build the project, start the server, and run a suite of tests verifying API functionality with real parquet data.
+
 ## API Usage
 
 ### Reverse Geocode Endpoint
