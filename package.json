@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "download": "mkdir -p data && curl -L -o data/whosonfirst-data-admin.parquet https://data.geocode.earth/wof/dist/parquet/whosonfirst-data-admin-latest.parquet",
+    "download": "mkdir -p data && curl -L -z data/whosonfirst-data-admin.parquet -o data/whosonfirst-data-admin.parquet https://data.geocode.earth/wof/dist/parquet/whosonfirst-data-admin-latest.parquet",
     "integration-test": "npm run build && node integration-test.js"
   },
   "keywords": [
