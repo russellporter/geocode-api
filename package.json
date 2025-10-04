@@ -7,8 +7,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "download": "ts-node scripts/download.ts",
-    "integration-test": "npm run build && node integration-test.js"
+    "download": "node scripts/download.js",
+    "integration-test": "npm run build && node scripts/integration-test.js"
   },
   "keywords": [
     "geocode",

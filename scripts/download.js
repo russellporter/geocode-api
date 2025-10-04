@@ -1,6 +1,5 @@
-import { execSync } from 'child_process';
-import { existsSync, statSync, utimesSync } from 'fs';
-import { mkdirSync } from 'fs';
+const { execSync } = require('child_process');
+const { existsSync, statSync, utimesSync, mkdirSync } = require('fs');
 
 const DATA_DIR = 'data';
 const FILE_PATH = `${DATA_DIR}/whosonfirst-data-admin.parquet`;
@@ -9,7 +8,7 @@ const MAX_AGE_DAYS = 30;
 
 mkdirSync(DATA_DIR, { recursive: true });
 
-const shouldCheck = (): boolean => {
+const shouldCheck = () => {
   if (!existsSync(FILE_PATH)) {
     console.log('File does not exist, downloading...');
     return true;

@@ -17,8 +17,8 @@ COPY src ./src
 # Build TypeScript
 RUN npm run build
 
-# Copy integration test file
-COPY integration-test.js ./
+# Copy scripts
+COPY scripts ./scripts
 
 # Remove dev dependencies and source files
 RUN npm prune --production && \
