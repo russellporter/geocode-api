@@ -25,4 +25,4 @@ jobs:
           -v $(pwd)/example-data:/app/data:ro \
           -e PARQUET_PATH=/app/data/whosonfirst-data-admin-andorra-integration-test.parquet \
           geocode-api:latest \
-          node integration-test.js
+          node scripts/integration-test.js
