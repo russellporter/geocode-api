@@ -32,10 +32,11 @@ interface ReverseGeocodeQuery {
   lon?: string;
   lat?: string;
   fields?: string;
+  placetype?: string;
 }
 
 app.get('/reverse', async (req: Request<{}, {}, {}, ReverseGeocodeQuery>, res: Response) => {
-  const { lon, lat, fields } = req.query;
+  const { lon, lat, fields, placetype } = req.query;
 
   // Validate parameters
   if (typeof lon !== 'string' || lon.trim().length === 0) {
@@ -105,8 +106,49 @@ app.get('/reverse', async (req: Request<{}, {}, {}, ReverseGeocodeQuery>, res: R
     }
   }
 
+  // Parse and validate placetype filter
+  const placetypeList: string[] = [];
+  if (typeof placetype === 'string' && placetype.trim().length > 0) {
+    const types = placetype.split(',').map(p => p.trim()).filter(p => p.length > 0);
+    // Validate placetype values to only allow alphanumeric and underscores
+    for (const type of types) {
+      if (!/^[a-z_]+$/i.test(type)) {
+        return res.status(400).json({
+          error: 'Invalid placetype',
+          message: `Placetype '${type}' contains invalid characters. Only letters and underscores are allowed.`
+        });
+      }
+      placetypeList.push(type);
+    }
+  }
+
   try {
-    // Use parameterized query for coordinate values to prevent SQL injection
+    // Build placetype filter using parameterized query
+    let placetypeFilter = '';
+    const placetypeParams: string[] = [];
+
+    if (placetypeList.length > 0) {
+      const placeholders = placetypeList.map((_, i) => '?').join(', ');
+      placetypeFilter = `AND placetype IN (${placeholders})`;
+      placetypeParams.push(...placetypeList);
+    }
+
+    // Build params in the order they appear in the query
+    const params: any[] = [
+      PARQUET_PATH,
+      // bbox coordinates
+      longitude,
+      longitude,
+      latitude,
+      latitude,
+      // placetype values
+      ...placetypeParams,
+      // ST_Point coordinates
+      longitude,
+      latitude
+    ];
+
+    // Use parameterized query for all values to prevent SQL injection
     const query = `
       SELECT ${selectClause}
       FROM read_parquet(?)
@@ -116,18 +158,9 @@ app.get('/reverse', async (req: Request<{}, {}, {}, ReverseGeocodeQuery>, res: R
         geometry_bbox.ymin <= ? AND
         geometry_bbox.ymax >= ?
       )
+      ${placetypeFilter}
       AND ST_ContainsProperly(geometry, ST_Point(?, ?))
     `;
-
-    const params = [
-      PARQUET_PATH,
-      longitude,
-      longitude,
-      latitude,
-      latitude,
-      longitude,
-      latitude
-    ];
 
     const result = await conn.run(query, params);
     const geometries = await result.getRowObjects();
