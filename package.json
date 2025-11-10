@@ -19,7 +19,7 @@
   "author": "Russell Porter",
   "license": "MIT",
   "dependencies": {
-    "@duckdb/node-api": "1.4.0-r.1",
+    "@duckdb/node-api": "1.4.1-r.5",
     "express": "5.1.0"
   },
   "devDependencies": {
