@@ -11,18 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Build test image
+      run: docker build --target test -t geocode-api:test .
 
-    - name: Build Docker image
-      run: docker build -t geocode-api:latest .
-
-    - name: Run integration tests in Docker
-      run: |
-        docker run --rm \
-          -v $(pwd)/example-data:/app/data:ro \
-          -e PARQUET_PATH=/app/data/whosonfirst-data-admin-andorra-integration-test.parquet \
-          geocode-api:latest \
-          node scripts/integration-test.js
+    - name: Run test suite in Docker
+      run: docker run --rm geocode-api:test

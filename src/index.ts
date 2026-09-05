@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express';
-import { DuckDBInstance, DuckDBConnection } from '@duckdb/node-api';
-import path from 'path';
+import { DuckDBInstance, type DuckDBConnection } from '@duckdb/node-api';
+import express, { type Request, type Response } from 'express';
+import path from 'node:path';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const PARQUET_PATH = process.env.PARQUET_PATH || path.join(__dirname, '../data/whosonfirst-data-admin.parquet');
+const PORT = Number.parseInt(process.env.PORT ?? '3000', 10);
+const PARQUET_PATH = process.env.PARQUET_PATH || path.join(import.meta.dirname, '../data/whosonfirst-data-admin.parquet');
 
 let db: DuckDBInstance;
 let conn: DuckDBConnection;
@@ -134,7 +134,7 @@ app.get('/reverse', async (req: Request<{}, {}, {}, ReverseGeocodeQuery>, res: R
     }
 
     // Build params in the order they appear in the query
-    const params: any[] = [
+    const params: (string | number)[] = [
       PARQUET_PATH,
       // bbox coordinates
       longitude,

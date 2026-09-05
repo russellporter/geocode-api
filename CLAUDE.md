@@ -1,5 +1,11 @@
 # Project Instructions
 
+## Development
+
+- Use Node.js 24.12 or newer.
+- Run `npm run check-types` before committing TypeScript changes.
+- Run `npm test` to build and execute the Node test suites.
+
 ## Releasing
 
 To create a new release:

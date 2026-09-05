@@ -6,7 +6,7 @@ API for querying administrative boundary data from parquet files using DuckDB an
 
 ### Prerequisites
 - Docker and Docker Compose (recommended)
-- Or Node.js 22+ (for local development)
+- Or Node.js 24.12+ (for local development)
 
 ### Download Data
 
@@ -54,13 +54,13 @@ npm start
 
 ### Testing
 
-Run integration tests against production data:
+Run the download unit tests and integration tests against the included Andorra fixture:
 
 ```bash
-npm run integration-test
+npm test
 ```
 
-This will build the project, start the server, and run a suite of tests verifying API functionality with real parquet data.
+Use `npm run integration-test` to run only the API integration suite.
 
 ## API Usage
 
