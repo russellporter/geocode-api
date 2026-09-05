@@ -8,32 +8,19 @@
 
 ## Releasing
 
-To create a new release:
+Every push to `main` runs the release workflow. It:
 
-1. Update the version in `package.json` if needed
-2. Commit and push any pending changes
-3. Create a GitHub release (which creates and pushes the tag):
-   ```bash
-   gh release create v1.0.0 --generate-notes
-   ```
-
-   Or with custom notes:
-   ```bash
-   gh release create v1.0.0 --notes "Release notes here"
-   ```
-
-This will trigger the GitHub Actions release workflow which:
 - Builds a Docker image
 - Pushes it to GitHub Container Registry (ghcr.io)
 - Tags the image with:
-  - Full semver version (e.g., `1.0.0`)
-  - Major.minor version (e.g., `1.0`)
-  - Major version (e.g., `1`)
+  - The package version and unique build number (e.g., `1.1.0-build.42`)
+  - `main`
   - Git SHA (e.g., `sha-abc123`)
-  - `latest` (if on main branch)
+  - `latest`
+- Creates a GitHub release with generated release notes
 
 The Docker image will be available at:
 ```
-ghcr.io/russellporter/geocode-api:1.0.0
+ghcr.io/russellporter/geocode-api:1.1.0-build.42
 ghcr.io/russellporter/geocode-api:latest
 ```
