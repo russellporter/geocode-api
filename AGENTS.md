@@ -2,7 +2,7 @@
 
 ## Development
 
-- Use Node.js 24.12 or newer.
+- Use Node.js 26 or newer.
 - Run `npm run check-types` before committing TypeScript changes.
 - Run `npm test` to build and execute the Node test suites.
 

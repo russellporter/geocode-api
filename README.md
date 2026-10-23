@@ -6,7 +6,7 @@ API for querying administrative boundary data from parquet files using DuckDB an
 
 ### Prerequisites
 - Docker and Docker Compose (recommended)
-- Or Node.js 24.12+ (for local development)
+- Or Node.js 26.12+ (for local development)
 
 ### Download Data
 
