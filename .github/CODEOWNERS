@@ -3,3 +3,15 @@
 
 # Default owner for everything in the repo
 * @russellporter
+
+# Dependabot dependency and workflow files do not request code-owner review.
+**/package.json
+**/package-lock.json
+**/npm-shrinkwrap.json
+**/Dockerfile
+**/Dockerfile.*
+**/docker-compose.yml
+**/docker-compose.yaml
+**/compose.yml
+**/compose.yaml
+/.github/workflows/
